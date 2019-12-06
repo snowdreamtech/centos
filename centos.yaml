@@ -1,0 +1,21 @@
+image: snowdreamtech/centos:latest
+tags: ["centos7", "7"]
+manifests:
+  - image: snowdreamtechamd64/centos:latest
+    platform:
+      architecture: amd64
+      os: linux
+  - image: snowdreamtechi386/centos:latest
+    platform:
+      architecture: 386
+      os: linux
+  - image: snowdreamtecharm32v7/centos:latest
+    platform:
+      architecture: arm
+      os: linux
+      variant: v7
+  - image: snowdreamtecharm64v8/centos:latest
+    platform:
+      architecture: arm64
+      os: linux
+      variant: v8
