@@ -1,4 +1,4 @@
-FROM i386/centos:7
+FROM i386/centos:8
 
 LABEL maintainer="snowdream <sn0wdr1am@icloud.com>"
 

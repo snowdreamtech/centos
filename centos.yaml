@@ -1,5 +1,5 @@
 image: snowdreamtech/centos:latest
-tags: ["centos7", "7"]
+tags: ["centos8", "8"]
 manifests:
   - image: snowdreamtechamd64/centos:latest
     platform:

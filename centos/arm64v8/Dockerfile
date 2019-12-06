@@ -1,4 +1,4 @@
-FROM arm64v8/centos:7
+FROM arm64v8/centos:8
 
 LABEL maintainer="snowdream <sn0wdr1am@icloud.com>"
 
