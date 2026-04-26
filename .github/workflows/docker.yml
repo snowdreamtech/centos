@@ -69,15 +69,15 @@ jobs:
       matrix:
         include:
           - version: "8"
-            centos_version: "8.10.0"
+            centos_version: "8.0.0"
             base_image: "quay.io/centos/centos:stream8"
             is_latest: false
           - version: "9"
-            centos_version: "9.7.0"
+            centos_version: "9.0.0"
             base_image: "quay.io/centos/centos:stream9"
             is_latest: false
           - version: "10"
-            centos_version: "10.1.0"
+            centos_version: "10.0.0"
             base_image: "quay.io/centos/centos:stream10"
             is_latest: true
     concurrency:
