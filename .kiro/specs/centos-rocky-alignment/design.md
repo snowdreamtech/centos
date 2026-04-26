@@ -93,6 +93,7 @@ centos/
 ```
 
 **Design Rationale:**
+
 - Mirror Rocky's `docker/{version}/` pattern for consistency
 - Each version folder is self-contained with all necessary files
 - Modular entrypoint.d/ architecture enables extensible initialization
@@ -103,6 +104,7 @@ centos/
 #### Base Image Strategy
 
 **Rocky Linux Pattern:**
+
 ```dockerfile
 FROM rockylinux/rockylinux:8.10
 FROM rockylinux/rockylinux:9.7
@@ -110,6 +112,7 @@ FROM rockylinux/rockylinux:10.1
 ```
 
 **CentOS Stream Adaptation:**
+
 ```dockerfile
 FROM quay.io/centos/centos:stream8
 FROM quay.io/centos/centos:stream9
@@ -159,6 +162,7 @@ ARG BUILDTIME \
 #### OCI Metadata Labels
 
 **Template Pattern:**
+
 ```dockerfile
 LABEL org.opencontainers.image.authors="Snowdream Tech" \
     org.opencontainers.image.title="<Distribution> <Version> Base Image" \
@@ -175,6 +179,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
 ```
 
 **CentOS-Specific Values:**
+
 - `title`: "CentOS Stream 8 Base Image" (not "Rocky Linux 8 Base Image")
 - `description`: Reference "CentOS Stream" instead of "Rocky Linux"
 - `documentation`: Point to centos project URLs
@@ -184,6 +189,7 @@ LABEL org.opencontainers.image.authors="Snowdream Tech" \
 #### Package Installation Logic
 
 **Identical Pattern (Distribution-Agnostic):**
+
 ```dockerfile
 RUN set -eux \
     && dnf install -y dnf-plugins-core \
@@ -201,16 +207,19 @@ RUN set -eux \
 ```
 
 **Version-Specific Repository Names:**
+
 - Stream 8: `powertools` (Rocky 8 uses `powertools`)
 - Stream 9: `crb` (Rocky 9 uses `crb`)
 - Stream 10: `crb` (Rocky 10 uses `crb`)
 
 **Version-Specific Package Names:**
+
 - Stream 8: `redhat-lsb-core` (Rocky 8 uses `redhat-lsb-core`)
 - Stream 9: `redhat-lsb-core` (Rocky 9 uses `redhat-lsb-core`)
 - Stream 10: `lsb-release` (Rocky 10 uses `lsb-release`)
 
 **System_Difference Documentation:** Add inline comments in Dockerfile when package names differ:
+
 ```dockerfile
 # CentOS Stream 10 uses lsb-release instead of redhat-lsb-core
 lsb-release \
@@ -219,6 +228,7 @@ lsb-release \
 #### gosu Installation (Architecture-Aware)
 
 **Identical Logic (Distribution-Agnostic):**
+
 ```dockerfile
 ENV GOSU_VERSION=1.19
 RUN set -eux; \
@@ -294,6 +304,7 @@ fi
 ```
 
 **Key Design Features:**
+
 - **Modular Architecture:** entrypoint.d/ scripts enable extensible initialization
 - **POSIX Compliance:** Works across Alpine, Debian, RHEL-based distributions
 - **Debug Support:** DEBUG=true enables verbose logging
@@ -306,12 +317,14 @@ fi
 #### entrypoint.d/ Modular Scripts
 
 **Design Pattern:**
+
 - Each script handles a specific initialization concern
 - Scripts execute in lexicographical order (00-, 10-, 20-, etc.)
 - Scripts are POSIX-compliant shell scripts
 - Scripts receive all entrypoint arguments via "$@"
 
 **Common Scripts (from Rocky Linux):**
+
 - User mapping and permission setup
 - Environment variable configuration
 - Timezone configuration
@@ -344,6 +357,7 @@ platforms: ${{ matrix.version == '8' && 'linux/amd64,linux/arm64,linux/ppc64le' 
 #### .release-please-config.json Design
 
 **Structure (Identical to Rocky):**
+
 ```json
 {
   "packages": {
@@ -370,6 +384,7 @@ platforms: ${{ matrix.version == '8' && 'linux/amd64,linux/arm64,linux/ppc64le' 
 #### .release-please-manifest.json Design
 
 **Structure:**
+
 ```json
 {
   "docker/8": "8.0.0",
@@ -379,6 +394,7 @@ platforms: ${{ matrix.version == '8' && 'linux/amd64,linux/arm64,linux/ppc64le' 
 ```
 
 **Version Strategy:**
+
 - Use semantic versioning aligned with CentOS Stream major versions
 - Start with x.0.0 for initial releases
 - release-please will auto-increment based on conventional commits
@@ -388,6 +404,7 @@ platforms: ${{ matrix.version == '8' && 'linux/amd64,linux/arm64,linux/ppc64le' 
 #### package.json Design
 
 **Structure:**
+
 ```json
 {
   "name": "centos",
@@ -404,6 +421,7 @@ platforms: ${{ matrix.version == '8' && 'linux/amd64,linux/arm64,linux/ppc64le' 
 ```
 
 **System_Differences:**
+
 - `name`: "centos" (not "rocky")
 - `description`: Reference "CentOS Stream" (not "Rocky Linux")
 
@@ -414,11 +432,13 @@ platforms: ${{ matrix.version == '8' && 'linux/amd64,linux/arm64,linux/ppc64le' 
 **Format:** `{major}-v{major}.{minor}.{patch}`
 
 **Examples:**
+
 - Stream 8: `8-v8.0.0`, `8-v8.0.1`, `8-v8.1.0`
 - Stream 9: `9-v9.0.0`, `9-v9.0.1`, `9-v9.1.0`
 - Stream 10: `10-v10.0.0`, `10-v10.0.1`, `10-v10.1.0`
 
 **Additional Tags (from docker.yml):**
+
 - `{version}-latest`: Latest release for specific version
 - `latest`: Latest release across all versions (version 10 only)
 - `{version}-nightly`: Nightly builds
@@ -431,12 +451,14 @@ platforms: ${{ matrix.version == '8' && 'linux/amd64,linux/arm64,linux/ppc64le' 
 #### docker.yml Workflow Architecture
 
 **Trigger Events:**
+
 - Push to main/dev branches
 - Tag pushes (8-v*, 9-v*, 10-v*)
 - Daily schedule (nightly builds)
 - Manual workflow_dispatch
 
 **Build Matrix:**
+
 ```yaml
 matrix:
   include:
@@ -452,6 +474,7 @@ matrix:
 ```
 
 **Build Steps:**
+
 1. Version filtering (workflow_dispatch support)
 2. Security hardening (harden-runner)
 3. Disk space optimization
@@ -521,33 +544,39 @@ All OCI labels reference "CentOS Stream" instead of "Rocky Linux" to accurately 
 ## Implementation Strategy
 
 ### Phase 1: Structure Creation
+
 1. Create `docker/8/`, `docker/9/`, `docker/10/` directories
 2. Create `entrypoint.d/` subdirectories
 3. Copy supporting files (vimrc.local, .dockerignore)
 
 ### Phase 2: Dockerfile Alignment
+
 1. Copy Dockerfiles from Rocky project
 2. Replace base images with CentOS Stream equivalents
 3. Update OCI labels with CentOS-specific values
 4. Add inline comments for System_Differences
 
 ### Phase 3: Entrypoint Script Alignment
+
 1. Copy docker-entrypoint.sh (no modifications needed)
 2. Copy entrypoint.d/ scripts (no modifications needed)
 3. Verify executable permissions
 
 ### Phase 4: Configuration Alignment
+
 1. Verify .release-please-config.json (no changes needed)
 2. Update .release-please-manifest.json versions
 3. Update package.json name and description
 4. Verify docker.yml workflow (already aligned)
 
 ### Phase 5: Documentation
+
 1. Create SYSTEM_DIFFERENCES.md
 2. Document all CentOS-specific variations
 3. Provide justifications for each difference
 
 ### Phase 6: Verification
+
 1. Verify all version folders have complete structure
 2. Verify all Dockerfiles use correct base images
 3. Verify all OCI labels reference CentOS Stream
@@ -590,17 +619,20 @@ All OCI labels reference "CentOS Stream" instead of "Rocky Linux" to accurately 
 ### Linting and Formatting
 
 **Dockerfile Linting:**
+
 ```bash
 hadolint docker/*/Dockerfile
 ```
 
 **Shell Script Linting:**
+
 ```bash
 shellcheck docker/*/docker-entrypoint.sh
 shellcheck docker/*/entrypoint.d/*
 ```
 
 **Markdown Linting:**
+
 ```bash
 markdownlint '**/*.md'
 ```
@@ -608,6 +640,7 @@ markdownlint '**/*.md'
 ### Conventional Commits Validation
 
 **commitlint Configuration (already in place):**
+
 - Enforces conventional commit format
 - Validates commit message structure
 - Integrated into CI/CD pipeline
@@ -688,6 +721,7 @@ markdownlint '**/*.md'
 This design provides a comprehensive blueprint for aligning the CentOS Stream Docker project with Rocky Linux standards while maintaining necessary distribution-specific differences. The template-based approach ensures consistency, the modular architecture enables extensibility, and the automated CI/CD pipeline (docker.yml) handles all testing and deployment without requiring additional infrastructure.
 
 **Key Success Factors:**
+
 - Strict adherence to Rocky Linux patterns
 - Clear documentation of System_Differences
 - Automated testing via docker.yml
