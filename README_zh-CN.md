@@ -17,7 +17,6 @@ CentOS Stream 的 Docker 镜像。支持多平台架构：(amd64, arm64, ppc64le
 
 | 版本 | CentOS Stream | 基础镜像 | 标签格式 | 状态 |
 |------|---------------|----------|----------|------|
-| 8 | Stream 8 | quay.io/centos/centos:stream8 | `8-v8.0.0` | ✅ 活跃 |
 | 9 | Stream 9 | quay.io/centos/centos:stream9 | `9-v9.0.0` | ✅ 活跃 |
 | 10 | Stream 10 | quay.io/centos/centos:stream10 | `10-v10.0.0` | ✅ 活跃 |
 
@@ -26,9 +25,8 @@ CentOS Stream 的 Docker 镜像。支持多平台架构：(amd64, arm64, ppc64le
 - `linux/amd64` - x86_64 架构
 - `linux/arm64` - ARM 64位架构
 - `linux/ppc64le` - PowerPC 64位小端序
-- `linux/s390x` - IBM System z 架构（仅版本 9 和 10）
+- `linux/s390x` - IBM System z 架构（版本 9 和 10）
 
-**注意**：CentOS Stream 8 不支持 s390x 架构。
 
 ## 快速开始
 

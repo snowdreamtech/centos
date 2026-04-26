@@ -17,7 +17,6 @@ name: "🐳 Docker Multi-Platform Build"
       - "dev"
     tags:
       # Release-Please generated tags (primary format)
-      - "8-v*"
       - "9-v*"
       - "10-v*"
       # Legacy semantic version tags (backward compatibility)
@@ -44,7 +43,6 @@ name: "🐳 Docker Multi-Platform Build"
         type: choice
         options:
           - "all"
-          - "8"
           - "9"
           - "10"
         default: "all"
@@ -68,10 +66,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - version: "8"
-            centos_version: "8.0.0"
-            base_image: "quay.io/centos/centos:stream8"
-            is_latest: false
           - version: "9"
             centos_version: "9.0.0"
             base_image: "quay.io/centos/centos:stream9"

@@ -17,7 +17,6 @@ Docker Image packaging for CentOS Stream. (amd64, arm64, ppc64le, s390x)
 
 | Version | CentOS Stream | Base Image | Tag Format | Status |
 |---------|---------------|------------|------------|--------|
-| 8 | Stream 8 | quay.io/centos/centos:stream8 | `8-v8.0.0` | ✅ Active |
 | 9 | Stream 9 | quay.io/centos/centos:stream9 | `9-v9.0.0` | ✅ Active |
 | 10 | Stream 10 | quay.io/centos/centos:stream10 | `10-v10.0.0` | ✅ Active |
 
@@ -26,9 +25,8 @@ Docker Image packaging for CentOS Stream. (amd64, arm64, ppc64le, s390x)
 - `linux/amd64` - x86_64 architecture
 - `linux/arm64` - ARM 64-bit architecture
 - `linux/ppc64le` - PowerPC 64-bit Little Endian
-- `linux/s390x` - IBM System z architecture (versions 9 and 10 only)
+- `linux/s390x` - IBM System z architecture (versions 9 and 10)
 
-**Note**: CentOS Stream 8 does not support s390x architecture.
 
 ## Quick Start
 
