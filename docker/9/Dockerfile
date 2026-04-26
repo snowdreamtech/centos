@@ -56,8 +56,6 @@ ENV KEEPALIVE=${KEEPALIVE} \
 RUN set -eux \
     && dnf install -y dnf-plugins-core \
     && dnf config-manager --set-enabled crb \
-    && dnf config-manager --set-enabled devel \
-    && dnf config-manager --set-enabled extras \
     && dnf -y --allowerasing install epel-release \
     && dnf -y --allowerasing update \
     && dnf -y --allowerasing install \
