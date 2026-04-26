@@ -3,6 +3,7 @@
   "packages": {
     "docker/8": {
       "release-type": "simple",
+      "release-as": "8.0.0",
       "component": "8",
       "include-component-in-tag": true,
       "changelog-path": "CHANGELOG.md",
@@ -16,6 +17,7 @@
     },
     "docker/9": {
       "release-type": "simple",
+      "release-as": "9.0.0",
       "component": "9",
       "include-component-in-tag": true,
       "changelog-path": "CHANGELOG.md",
@@ -29,6 +31,7 @@
     },
     "docker/10": {
       "release-type": "simple",
+      "release-as": "10.0.0",
       "component": "10",
       "include-component-in-tag": true,
       "changelog-path": "CHANGELOG.md",
