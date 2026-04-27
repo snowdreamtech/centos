@@ -32,6 +32,8 @@ name: "🐳 Docker Multi-Platform Build"
       - "v[0-9]+"
       - "V[0-9]+"
       - "centos-*"
+  release:
+    types: [published]
   schedule:
     # Automatically run on every Day
     - cron: "0 17 * * *"
