@@ -63,7 +63,7 @@ RUN set -eux \
     zsh \
     nano \
     rsync \
-    redhat-lsb-core \
+    lsb-release \
     sudo \
     procps-ng \
     vim-enhanced \
