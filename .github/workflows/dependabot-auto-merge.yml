@@ -1,3 +1,6 @@
+# Copyright (c) 2026 SnowdreamTech. All rights reserved.
+# Licensed under the MIT License. See LICENSE file in the project root for full license information.
+
 ---
 name: "🚢 Dependabot Auto-Merge"
 
@@ -15,41 +18,108 @@ jobs:
       contents: write
       pull-requests: write
     concurrency:
-      group: auto-merge-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+      group: auto-merge-${{ github.workflow }}-${{ github.ref }}
       cancel-in-progress: true
-    timeout-minutes: 15
+    timeout-minutes: 30
     # Only run for Dependabot PRs
     if: github.event.pull_request.user.login == 'dependabot[bot]'
     steps:
-      - name: "🔒 Harden Runner (Security Egress Audit)"
-        uses: step-security/harden-runner@6c3c2f2c1c457b00c10c4848d6f5491db3b629df # v2.18.0
+      - name: "🔒 Harden Runner"
+        uses: step-security/harden-runner@9af89fc71515a100421586dfdb3dc9c984fbf411 # v2.19.4
         with:
+          disable-sudo: true
           egress-policy: block
           allowed-endpoints: >
             api.github.com:443
-            *.githubusercontent.com:443
+            raw.githubusercontent.com:443
+            objects.githubusercontent.com:443
+            pkg-containers.githubusercontent.com:443
+            avatars.githubusercontent.com:443
             github.com:443
-            mise.run:443
-            install.mise.jdx.dev:443
-            *.mise.jdx.dev:443
-
+            packages.microsoft.com:443
+            archive.ubuntu.com:80
+            archive.ubuntu.com:443
+            security.ubuntu.com:80
+            security.ubuntu.com:443
+            ports.ubuntu.com:80
+            ports.ubuntu.com:443
+            keyserver.ubuntu.com:80
+            keyserver.ubuntu.com:443
+            changelogs.ubuntu.com:80
+            changelogs.ubuntu.com:443
+            deb.debian.org:80
+            deb.debian.org:443
+            security.debian.org:80
+            security.debian.org:443
+            snapshot.debian.org:80
+            snapshot.debian.org:443
+            dl.rockylinux.org:443
+            mirrors.rockylinux.org:443
+            mirror.centos.org:443
+            vault.centos.org:443
+            isv-data.centos.org:443
+            mirrorlist.centos.org:80
+            mirrorlist.centos.org:443
+            cdn.redhat.com:443
+            cdn-ubi.redhat.com:443
+            access.redhat.com:443
+            sso.redhat.com:443
+            dl-cdn.alpinelinux.org:443
+            registry.npmjs.org:443
+            registry.yarnpkg.com:443
+            pypi.org:443
+            files.pythonhosted.org:443
+            proxy.golang.org:443
+            sum.golang.org:443
+            index.crates.io:443
+            static.rust-lang.org:443
+            packagist.org:443
+            repo.maven.apache.org:443
+            golang.org:443
+            pkg.go.dev:443
+            dl.google.com:443
+            rubygems.org:443
+            registry.terraform.io:443
+            formulae.brew.sh:443
+            repo.yarnpkg.com:443
+            ghcr.io:443
+            production.cloudflare.docker.com:80
+            production.cloudflare.docker.com:443
+            registry-1.docker.io:443
+            auth.docker.io:443
+            docker.io:443
+            quay.io:443
+            cdn.quay.io:443
+            docker-images-prod.s3.us-west-2.amazonaws.com:443
+            docker-images-prod.s3.us-east-1.amazonaws.com:443
+            docker-images-prod.s3.amazonaws.com:443
+            s3.amazonaws.com:443
+            s3.us-west-2.amazonaws.com:443
+            s3.us-east-1.amazonaws.com:443
+            osv-vulnerabilities.storage.googleapis.com:443
+            api.osv.dev:443
+            get.trivy.dev:443
+            aquasecurity.github.io:443
+            tuf-repo-cdn.sigstore.dev:443
+            oauth2.sigstore.dev:443
+            rekor.sigstore.dev:443
+            fulcio.sigstore.dev:443
+            api.sigstore.dev:443
       - name: "📂 Checkout Repository Code"
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: false
 
       - name: "📊 Fetch Dependabot Metadata"
         id: metadata
-        uses: dependabot/fetch-metadata@ffa630c65fa7e0ecfa0625b5ceda64399aea1b36 # v3.0.0
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
 
       - name: "✅ Approve PR (for Branch Protection)"
-        # Automatically approve patch and minor updates
-        if: |
-          steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
-          steps.metadata.outputs.update-type == 'version-update:semver-minor'
+        # Automatically approve ALL updates (patch, minor, and major)
+        # ⚠️  WARNING: Major updates may contain breaking changes
+        # Ensure your CI/CD pipeline has comprehensive tests
         shell: sh
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
@@ -58,14 +128,44 @@ jobs:
           gh pr review --approve "$PR_URL"
 
       - name: "🚢 Enable Auto-Merge"
-        if: |
-          steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
-          steps.metadata.outputs.update-type == 'version-update:semver-minor'
+        # Enable auto-merge for ALL updates (patch, minor, and major)
+        # ⚠️  WARNING: Major updates may contain breaking changes
+        # The PR will only merge if all CI checks pass
         shell: sh
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           PR_URL: ${{ github.event.pull_request.html_url }}
         run: |
-          # gh pr merge --auto --merge "$PR_URL"
-          # gh pr merge --auto --squash "$PR_URL"
+          # Enable auto-merge with rebase strategy
+          # PR will be automatically merged when all checks pass
+          # and will be automatically closed after merge (GitHub default behavior)
           gh pr merge --auto --rebase "$PR_URL"
+          echo "✅ Auto-merge enabled for $PR_URL"
+          echo "⏳ PR will merge automatically when all checks pass"
+          echo "🔒 PR will be closed automatically after merge"
+
+      - name: "📝 Add Comment"
+        # Add informative comment about auto-merge status
+        shell: sh
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          UPDATE_TYPE: ${{ steps.metadata.outputs.update-type }}
+          DEPENDENCY_NAMES: ${{ steps.metadata.outputs.dependency-names }}
+        run: |
+          # Determine if this is a major update
+          _is_major=""
+          if echo "$UPDATE_TYPE" | grep -q "major"; then
+            _is_major="⚠️  **MAJOR UPDATE** - May contain breaking changes"
+          fi
+
+          gh pr comment "$PR_URL" --body "🤖 **Auto-merge enabled**
+
+          - ✅ PR approved automatically
+          - � Dependencies: \`$DEPENDENCY_NAMES\`
+          - �🔄 Update type: \`$UPDATE_TYPE\`
+          ${_is_major:+- $_is_major}
+          - ⏳ Will merge when all checks pass
+          - 🔒 Will close automatically after merge
+
+          No manual action required. CI tests will validate the changes."
