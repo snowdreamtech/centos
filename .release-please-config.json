@@ -3,10 +3,11 @@
   "packages": {
     "docker/9": {
       "release-type": "simple",
-      "release-as": "9.0.0",
       "component": "9",
       "include-component-in-tag": true,
+      "release-as": "9.0.0",
       "changelog-path": "CHANGELOG.md",
+      "exclude-paths": ["docker/9/CHANGELOG.md"],
       "extra-files": [
         {
           "type": "generic",
@@ -17,10 +18,11 @@
     },
     "docker/10": {
       "release-type": "simple",
-      "release-as": "10.0.0",
       "component": "10",
       "include-component-in-tag": true,
+      "release-as": "10.0.0",
       "changelog-path": "CHANGELOG.md",
+      "exclude-paths": ["docker/10/CHANGELOG.md"],
       "extra-files": [
         {
           "type": "generic",
