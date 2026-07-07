@@ -1,5 +1,24 @@
 # Changelog
 
+## [9.0.0](https://github.com/snowdreamtech/centos/compare/9-v9.0.0...9-v9.0.0) (2026-07-07)
+
+
+### 🚀 Features
+
+* **docker:** create docker folder structure for versions 8, 9, and 10 ([5d26ac7](https://github.com/snowdreamtech/centos/commit/5d26ac7990badf127d72956d981c7ce3082543bd)), closes [#1](https://github.com/snowdreamtech/centos/issues/1)
+
+
+### 🐛 Bug Fixes
+
+* **docker:** remove non-existent devel and extras repositories ([bb02e6a](https://github.com/snowdreamtech/centos/commit/bb02e6a45285654adc7f7531d9b18681d3f3a509))
+* **docker:** remove redhat-lsb-core from CentOS Stream 9 ([269f4d3](https://github.com/snowdreamtech/centos/commit/269f4d35335fff47b3c47f8b65e50f6beb4525a1))
+
+
+### ♻️ Miscellaneous Chores
+
+* configure markdownlint to ignore spec files ([1f6b91b](https://github.com/snowdreamtech/centos/commit/1f6b91bf79a3807aba46adffa02b043ebb81ed24))
+* release main ([838173b](https://github.com/snowdreamtech/centos/commit/838173b5120352e3adf90d9f77efd54d3d2aee39))
+
 ## [9.0.0](https://github.com/snowdreamtech/centos/compare/9-v9.0.0...9-v9.0.0) (2026-04-27)
 
 
