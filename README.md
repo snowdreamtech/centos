@@ -17,8 +17,6 @@ Docker Image packaging for CentOS Stream. (amd64, arm64, ppc64le, s390x)
 
 | Version | CentOS Stream | Base Image | Tag Format | Status |
 |---------|---------------|------------|------------|--------|
-| 9 | Stream 9 | quay.io/centos/centos:stream9 | `9-v9.0.0` | ✅ Active |
-| 10 | Stream 10 | quay.io/centos/centos:stream10 | `10-v10.0.0` | ✅ Active |
 
 ## Supported Architectures
 

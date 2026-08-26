@@ -482,7 +482,7 @@ matrix:
 5. Trivy cache setup
 6. QEMU emulation (multi-arch)
 7. Docker Buildx setup
-8. Registry authentication (DockerHub, Quay.io, GHCR)
+8. Registry authentication (DockerHub, GHCR)
 9. Metadata generation
 10. Multi-platform build & push
 11. Manifest verification

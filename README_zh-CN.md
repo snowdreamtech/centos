@@ -17,8 +17,6 @@ CentOS Stream 的 Docker 镜像。支持多平台架构：(amd64, arm64, ppc64le
 
 | 版本 | CentOS Stream | 基础镜像 | 标签格式 | 状态 |
 |------|---------------|----------|----------|------|
-| 9 | Stream 9 | quay.io/centos/centos:stream9 | `9-v9.0.0` | ✅ 活跃 |
-| 10 | Stream 10 | quay.io/centos/centos:stream10 | `10-v10.0.0` | ✅ 活跃 |
 
 ## 支持的架构
 
