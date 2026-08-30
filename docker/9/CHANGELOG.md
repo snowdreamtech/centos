@@ -7,10 +7,3 @@
 
 * **docker:** optimize DNF configuration and repo mirrorlist handling for CentOS ([dd4943b](https://github.com/snowdreamtech/centos/commit/dd4943b2344dd0d8efc56a24f6603b76b7dadb2e))
 
-## [9.0.0](https://github.com/snowdreamtech/centos/compare/9-v9.0.0...9-v9.0.0) (2026-08-28)
-
-
-### 🐛 Bug Fixes
-
-* **entrypoint:** unify default non-root username to appuser and restore flat script structure ([ee25d8e](https://github.com/snowdreamtech/centos/commit/ee25d8ed76bef83f9dbd46b47badc783a20fbe3f))
-* **entrypoint:** wrap user setup in function and default username for non-root PUID ([af93b00](https://github.com/snowdreamtech/centos/commit/af93b00dcd8049aee3e5bcca86f0abe02a36a27b))
