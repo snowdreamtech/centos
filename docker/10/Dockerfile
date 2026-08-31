@@ -55,10 +55,6 @@ ENV KEEPALIVE=${KEEPALIVE} \
 # Includes standard repositories and essential system packages.
 RUN set -eux \
     && echo -e "max_parallel_downloads=10\nretries=5\ntimeout=30" >> /etc/dnf/dnf.conf \
-    && sed -i -e 's|^mirrorlist=|#mirrorlist=|g' \
-              -e 's|^metalink=|#metalink=|g' \
-              -e 's|^#baseurl=|baseurl=|g' \
-              /etc/yum.repos.d/*.repo \
     && dnf install -y dnf-plugins-core \
     && dnf config-manager --set-enabled crb \
     && dnf -y --allowerasing install epel-release \
